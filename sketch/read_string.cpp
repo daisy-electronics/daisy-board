@@ -1,6 +1,6 @@
 #include "read_string.h"
 
-#define MESSAGE_TOO_LONG F("message too long")
+#include "codes.h"
 
 void read_string(char *received_string) {
   size_t i = 0;
@@ -11,7 +11,7 @@ void read_string(char *received_string) {
     if (i < Protocol::MESSAGE_MAX_LENGTH - 1) {
       received_string[i++] = ch;
     } else if (i == Protocol::MESSAGE_MAX_LENGTH - 1) {
-      Protocol::emit_event("error", MESSAGE_TOO_LONG);
+      Protocol::emit_event(EVENT_WARNING, ERROR_MESSAGE_TOO_LONG);
     }
   }
 

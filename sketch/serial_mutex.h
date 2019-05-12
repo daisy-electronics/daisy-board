@@ -4,9 +4,8 @@
 #include <semphr.h>
 
 class SerialMutex {
-  static SemaphoreHandle_t semaphore;
+  static SemaphoreHandle_t mutex_handle;
 public:
-  static void setup();
   SerialMutex();
   ~SerialMutex();
 };

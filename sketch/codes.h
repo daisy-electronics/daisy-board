@@ -1,0 +1,7 @@
+#define ERROR_MESSAGE_TOO_LONG "0"
+
+#define EVENT_ERROR "0"
+#define EVENT_WARNING "1"
+
+#define REQUEST_SET_RELAY "0"
+#define REQUEST_READ_SOIL_MOISTURE "1"

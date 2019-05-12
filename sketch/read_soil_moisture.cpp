@@ -1,15 +1,12 @@
-#include <Arduino.h>
-#include "protocol.h"
 #include "read_soil_moisture.h"
+
+#include "protocol.h"
 
 constexpr int16_t MOISTURE_LOWER_LIMIT = 448;
 constexpr int16_t MOISTURE_UPPER_LIMIT = 815;
 constexpr int16_t INTERVAL = MOISTURE_UPPER_LIMIT - MOISTURE_LOWER_LIMIT;
 
 float from_raw(int16_t moisture);
-
-
-const char *ReadSoilMoisture::request_subject = "1";
 
 void ReadSoilMoisture::setup() {
 }

@@ -1,17 +1,13 @@
 #include "serial_mutex.h"
 
-static SemaphoreHandle_t SerialMutex::semaphore = nullptr;
-
-static void SerialMutex::setup() {
-  semaphore = xSemaphoreCreateMutex();
-}
+static SemaphoreHandle_t SerialMutex::mutex_handle = xSemaphoreCreateMutex();
 
 SerialMutex::SerialMutex() {
-  while (xSemaphoreTake(semaphore, (TickType_t) 5) != pdTRUE) {
+  while (xSemaphoreTake(mutex_handle, (TickType_t) 5) != pdTRUE) {
     vTaskDelay(1);
   }
 }
 
 SerialMutex::~SerialMutex() {
-  xSemaphoreGive(semaphore);
+  xSemaphoreGive(mutex_handle);
 }

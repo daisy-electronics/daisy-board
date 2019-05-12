@@ -1,8 +1,6 @@
-#include <Arduino.h>
-#include "protocol.h"
 #include "set_relay.h"
 
-const char *SetRelay::request_subject = "0";
+#include "protocol.h"
 
 void SetRelay::setup() {
   for (int8_t i = 3; i < 11; i++) {
