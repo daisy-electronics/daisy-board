@@ -28,6 +28,11 @@ void Protocol::handle_packet(const Protocol::Packet &pck) {
     } else if (strcmp(pck.subject, REQUEST_GET_RELAY) == 0) {
       Relay::get_state(pck.request_id, pck.message);
 
+
+    // toggle relay
+    } else if (strcmp(pck.subject, REQUEST_TOGGLE_RELAY) == 0) {
+      Relay::toggle_state(pck.request_id, pck.message);
+
     // read soil moisture
     } else if (strcmp(pck.subject, REQUEST_READ_SOIL_MOISTURE) == 0) {
       ReadSoilMoisture::read(pck.request_id, pck.message);
