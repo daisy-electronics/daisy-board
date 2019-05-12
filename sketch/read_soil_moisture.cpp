@@ -1,6 +1,7 @@
 #include "read_soil_moisture.h"
 
 #include "protocol.h"
+#include "codes.h"
 
 constexpr int16_t MOISTURE_LOWER_LIMIT = 448;
 constexpr int16_t MOISTURE_UPPER_LIMIT = 815;
@@ -15,7 +16,7 @@ void ReadSoilMoisture::do_sync(uint32_t request_id, const char *message) {
   int8_t sensor_id = message[0] - '0';
 
   if (sensor_id < 0 || sensor_id > 1) {
-    Protocol::send_failure_response(request_id, F("INVALID_SENSOR_ID"));
+    Protocol::send_failure_response(request_id, INVALID_SOIL_MOISTURE_SENSOR_ID);
     return;
   }
 

@@ -9,9 +9,9 @@ namespace Protocol {
   constexpr uint8_t FAILURE_RESPONSE = 3;
   constexpr uint8_t INVALID = 9;
 
-  constexpr uint16_t PACKET_MAX_LENGTH = 256;
+  constexpr uint16_t PACKET_MAX_LENGTH = 48;
   constexpr uint16_t REQUEST_ID_MAX_LENGTH = 8;
-  constexpr uint16_t SUBJECT_MAX_LENGTH = 32;
+  constexpr uint16_t SUBJECT_MAX_LENGTH = 16;
   constexpr uint16_t MESSAGE_MAX_LENGTH = PACKET_MAX_LENGTH - REQUEST_ID_MAX_LENGTH - SUBJECT_MAX_LENGTH - 1 - 1;
 
   struct Packet {
