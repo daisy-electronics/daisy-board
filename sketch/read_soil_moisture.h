@@ -4,5 +4,5 @@
 
 namespace ReadSoilMoisture {
   void setup();
-  void do_sync(uint32_t request_id, const char *message);
+  void read(int16_t request_id, const char *message);
 };

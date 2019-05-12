@@ -23,7 +23,7 @@ namespace Protocol {
   }
 
   template <typename Subject>
-  void send_request(uint32_t request_id, Subject subject) {
+  void send_request(int16_t request_id, Subject subject) {
     SerialMutex sm;
     Serial.print(REQUEST);
     Serial.print(request_id);
@@ -32,7 +32,7 @@ namespace Protocol {
   }
 
   template <typename Subject, typename Message>
-  void send_request(uint32_t request_id, Subject subject, Message message) {
+  void send_request(int16_t request_id, Subject subject, Message message) {
     SerialMutex sm;
     Serial.print(REQUEST);
     Serial.print(request_id);
@@ -42,10 +42,10 @@ namespace Protocol {
     Serial.println(message);
   }
 
-  void send_success_response(uint32_t request_id);
+  void send_success_response(int16_t request_id);
 
   template <typename Message>
-  void send_success_response(uint32_t request_id, Message message) {
+  void send_success_response(int16_t request_id, Message message) {
     SerialMutex sm;
     Serial.print(SUCCESS_RESPONSE);
     Serial.print(request_id);
@@ -53,10 +53,10 @@ namespace Protocol {
     Serial.println(message);
   }
 
-  void send_failure_response(uint32_t request_id);
+  void send_failure_response(int16_t request_id);
 
   template <typename Message>
-  void send_failure_response(uint32_t request_id, Message message) {
+  void send_failure_response(int16_t request_id, Message message) {
     SerialMutex sm;
     Serial.print(FAILURE_RESPONSE);
     Serial.print(request_id);

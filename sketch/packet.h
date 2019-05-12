@@ -16,7 +16,7 @@ namespace Protocol {
 
   struct Packet {
     uint8_t type = INVALID;
-    uint32_t request_id = 0;
+    int16_t request_id = 0;
     char subject[SUBJECT_MAX_LENGTH];
     char message[MESSAGE_MAX_LENGTH];
 

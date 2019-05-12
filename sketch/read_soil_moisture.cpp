@@ -12,11 +12,11 @@ float from_raw(int16_t moisture);
 void ReadSoilMoisture::setup() {
 }
 
-void ReadSoilMoisture::do_sync(uint32_t request_id, const char *message) {
+void ReadSoilMoisture::read(int16_t request_id, const char *message) {
   int8_t sensor_id = message[0] - '0';
 
   if (sensor_id < 0 || sensor_id > 1) {
-    Protocol::send_failure_response(request_id, INVALID_SOIL_MOISTURE_SENSOR_ID);
+    Protocol::send_failure_response(request_id, ERROR_INVALID_SOIL_MOISTURE_SENSOR_ID);
     return;
   }
 
