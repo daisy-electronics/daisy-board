@@ -39,20 +39,22 @@ namespace Protocol {
   void send_success_response(int16_t request_id);
 
   template <typename Message>
-  void send_success_response(int16_t request_id, Message message) {
+  void send_success_response(int16_t request_id, Message message, bool finish = true) {
     Serial.print(SUCCESS_RESPONSE);
     Serial.print(request_id);
     Serial.print("|");
-    Serial.println(message);
+    Serial.print(message);
+    if (finish) Serial.println("");
   }
 
   void send_failure_response(int16_t request_id);
 
   template <typename Message>
-  void send_failure_response(int16_t request_id, Message message) {
+  void send_failure_response(int16_t request_id, Message message, bool finish = true) {
     Serial.print(FAILURE_RESPONSE);
     Serial.print(request_id);
     Serial.print("|");
-    Serial.println(message);
+    Serial.print(message);
+    if (finish) Serial.println("");
   }
 };
