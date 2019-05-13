@@ -9,3 +9,5 @@
 #define REQUEST_READ_SOIL_MOISTURE "1"
 #define REQUEST_GET_RELAY "2"
 #define REQUEST_TOGGLE_RELAY "3"
+
+#define EEPROM_RELAY_START 0 // length = 8 bytes
