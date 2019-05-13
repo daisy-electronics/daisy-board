@@ -3,7 +3,7 @@
 #include "protocol.h"
 #include "codes.h"
 
-int8_t relay_id2pin(int8_t relay_id);
+static int8_t relay_id2pin(int8_t relay_id);
 
 void Relay::setup() {
   for (int8_t relay_id = 0; relay_id < 8; relay_id++) {
@@ -56,6 +56,6 @@ void Relay::toggle_state(int16_t request_id, const char *message) {
   Protocol::send_success_response(request_id);
 }
 
-inline int8_t relay_id2pin(int8_t relay_id) {
+static inline int8_t relay_id2pin(int8_t relay_id) {
   return 10 - relay_id;
 }

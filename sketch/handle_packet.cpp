@@ -3,12 +3,14 @@
 #include "dht_sensor.h"
 #include "soil_moisture.h"
 #include "relay.h"
+#include "ds18b20.h";
 #include "codes.h"
 
 void Protocol::setup_packet_handling() {
-  SoilMoisture::setup();
   DHTSensor::setup();
+  DS18B20::setup();
   Relay::setup();
+  SoilMoisture::setup();
 }
 
 void Protocol::handle_packet(const Protocol::Packet &pck) {
@@ -24,6 +26,10 @@ void Protocol::handle_packet(const Protocol::Packet &pck) {
     // read dht
     if (strcmp(pck.subject, REQUEST_READ_DHT) == 0) {
       DHTSensor::read(pck.request_id, pck.message);
+
+    // read ds18b20
+    } else if (strcmp(pck.subject, REQUEST_READ_DS18B20) == 0) {
+      DS18B20::read(pck.request_id, pck.message);
 
     // set relay
     } else if (strcmp(pck.subject, REQUEST_SET_RELAY) == 0) {
