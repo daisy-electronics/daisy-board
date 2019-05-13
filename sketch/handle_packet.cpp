@@ -1,14 +1,14 @@
 #include "handle_packet.h"
 
 #include "dht_sensor.h"
+#include "soil_moisture.h"
 #include "relay.h"
-#include "read_soil_moisture.h"
 #include "codes.h"
 
 void Protocol::setup_packet_handling() {
+  SoilMoisture::setup();
   DHTSensor::setup();
   Relay::setup();
-  ReadSoilMoisture::setup();
 }
 
 void Protocol::handle_packet(const Protocol::Packet &pck) {
@@ -40,7 +40,7 @@ void Protocol::handle_packet(const Protocol::Packet &pck) {
 
     // read soil moisture
     } else if (strcmp(pck.subject, REQUEST_READ_SOIL_MOISTURE) == 0) {
-      ReadSoilMoisture::read(pck.request_id, pck.message);
+      SoilMoisture::read(pck.request_id, pck.message);
     }
   }
 }

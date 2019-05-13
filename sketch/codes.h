@@ -6,6 +6,8 @@
 
 #define EVENT_ERROR "0"
 #define EVENT_WARNING "1"
+#define EVENT_SOIL_MOISTURE "2"
+#define EVENT_DHT "3"
 
 #define REQUEST_SET_RELAY "0"
 #define REQUEST_READ_SOIL_MOISTURE "1"

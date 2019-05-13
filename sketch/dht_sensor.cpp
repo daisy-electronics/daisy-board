@@ -1,23 +1,20 @@
 #include "dht_sensor.h"
 
-#include <DHT.h>
+#include "dht.h"
 #include "protocol.h"
 #include "codes.h"
 
 #define SENSOR0 51 // DHT22
 #define SENSOR1 53 // DHT22
 
-void readSensor(int16_t request_id, int8_t sensor_id);
+dht sensor;
 
-DHT sensors[] = {
-  DHT(SENSOR0, DHT22),
-  DHT(SENSOR1, DHT22)
-};
+float data_humidity[] = { 0, 0 };
+float data_temperature[] = { 0, 0 };
+
+int8_t sensor_id2pin(int8_t);
 
 void DHTSensor::setup() {
-  for (int8_t i = 0; i < 2; i++) {
-    sensors[i].begin();
-  }
 }
 
 void DHTSensor::read(int16_t request_id, const char *message) {
@@ -28,24 +25,36 @@ void DHTSensor::read(int16_t request_id, const char *message) {
     return;
   }
 
-  readSensor(request_id, sensor_id);
+  static char str_humidity[5];
+  static char str_temperature[5];
+  dtostrf(data_humidity[sensor_id], 4, 1, str_humidity);
+  dtostrf(data_temperature[sensor_id], 4, 1, str_temperature);
+  Protocol::send_success_response(request_id, str_humidity, str_temperature);
 }
 
-void readSensor(int16_t request_id, int8_t sensor_id) {
-  const DHT &sensor = sensors[sensor_id];
-  const float humidity = sensor.readHumidity();
-  const float temperature = sensor.readTemperature();
-
-  if (isnan(humidity) || isnan(temperature)) {
-    Protocol::send_failure_response(request_id, ERROR_READ_DHT_SENSOR);
+void DHTSensor::read_and_emit(int8_t sensor_id) {
+  int res = sensor.read22(sensor_id2pin(sensor_id));
+  if (res != DHTLIB_OK) {
+    Protocol::emit_event(EVENT_ERROR, ERROR_READ_DHT_SENSOR);
     return;
   }
 
+  data_humidity[sensor_id] = sensor.humidity;
+  data_temperature[sensor_id] = sensor.temperature;
+
   static char str_humidity[5];
   static char str_temperature[5];
-  dtostrf(humidity, 4, 1, str_humidity);
-  dtostrf(temperature, 4, 1, str_temperature);
-  Protocol::send_success_response(request_id, str_humidity, false);
-  Serial.print(" ");
-  Serial.println(str_temperature);
+  dtostrf(sensor.humidity, 4, 1, str_humidity);
+  dtostrf(sensor.temperature, 4, 1, str_temperature);
+  Protocol::emit_event(EVENT_DHT, sensor_id, str_humidity, str_temperature);
+}
+
+int8_t sensor_id2pin(int8_t sensor_id) {
+  if (sensor_id == 0) {
+    return SENSOR0;
+  } else if (sensor_id == 1) {
+    return SENSOR1;
+  } else {
+    return -1;
+  }
 }
