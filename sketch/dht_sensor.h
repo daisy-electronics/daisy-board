@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-namespace DHTSensor {
+namespace DHT {
   void setup();
-  void read(int16_t request_id, const char *message);
+  void read_get_dht_data(uint8_t bit);
 };

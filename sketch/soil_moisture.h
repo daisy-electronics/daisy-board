@@ -4,5 +4,5 @@
 
 namespace SoilMoisture {
   void setup();
-  void read(int16_t request_id, const char *message);
+  void read_get_soil_moisture_data(uint8_t bit);
 };

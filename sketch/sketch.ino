@@ -1,15 +1,20 @@
 #include <Arduino_FreeRTOS.h>
 #include "protocol.h"
-#include "read_string.h"
-#include "handle_packet.h"
+#include "relay.h"
+#include "soil_moisture.h"
+#include "dht_sensor.h"
+#include "ds18b20.h"
 
 void task_read_serial(void *pv_parameters);
 
 void setup() {
-  while (!Serial) ;
+  while (!Serial);
   Serial.begin(9600);
 
-  Protocol::setup_packet_handling();
+  Relay::setup();
+  SoilMoisture::setup();
+  DHT::setup();
+  DS18B20::setup();
 
   xTaskCreate(
     task_read_serial,
@@ -22,16 +27,11 @@ void setup() {
 }
 
 void task_read_serial(void *pv_parameters) {
-  static char received_string[Protocol::MESSAGE_MAX_LENGTH] = { '\0' };
-  static Protocol::Packet pck;
-
   while (true) {
-    read_string(received_string);
-    if (received_string[0] != '\0') {
-      Protocol::Packet::parse(received_string, pck);
-      Protocol::handle_packet(pck);
+    if (Serial.available() > 0) {
+      const char ch = Serial.read();
+      Protocol::put(ch);
     }
-
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }

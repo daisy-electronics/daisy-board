@@ -4,7 +4,7 @@
 
 namespace Relay {
   void setup();
-  void set_state(int16_t request_id, const char *message);
-  void get_state(int16_t request_id, const char *message);
-  void toggle_state(int16_t request_id, const char *message);
+  void read_set_relay_data(uint8_t bit);
+  void read_get_relay_data(uint8_t bit);
+  void read_toggle_relay_data(uint8_t bit);
 };

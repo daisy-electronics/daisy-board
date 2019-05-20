@@ -4,5 +4,5 @@
 
 namespace DS18B20 {
   void setup();
-  void read(int16_t request_id, const char *message);
+  void read_get_ds18b20_data(uint8_t bit);
 };
